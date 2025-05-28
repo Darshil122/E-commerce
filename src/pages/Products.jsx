@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { Link, useNavigate } from "react-router-dom";
+
 const Products = () => {
   const [data, setData] = useState([]);
   const [filteredData, setFilteredData] = useState(data);
   const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 12;
+
+  const navigate = useNavigate();
 
   const lastIndex = currentPage * itemsPerPage;
   const firstIndex = lastIndex - itemsPerPage;
@@ -100,8 +104,9 @@ const Products = () => {
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10">
               {currentData.map((item) => (
-                <div
+                <Link
                   key={item.id}
+                  to={`/product/${item.id}`}
                   className="bg-white p-4 rounded-xl shadow hover:shadow-lg transition duration-300"
                 >
                   <img
@@ -118,10 +123,10 @@ const Products = () => {
                   <p className="text-lg font-bold text-gray-800 mb-4">
                     ${item.price}
                   </p>
-                  <button className="w-full bg-fuchsia-600 hover:bg-fuchsia-700 text-white py-2 rounded-lg transition">
+                  <button onClick={() =>{navigate(`/product/${item.id}`)}} className="w-full bg-fuchsia-600 hover:bg-fuchsia-700 text-white py-2 rounded-lg transition">
                     Add to Cart
                   </button>
-                </div>
+                </Link>
               ))}
             </div>
           </>
