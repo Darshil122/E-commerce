@@ -117,9 +117,6 @@ const Products = () => {
                   <h3 className="text-base text-gray-700 mb-1">
                     {item.title.substring(0, 11)}
                   </h3>
-                  {/* <p className="text-sm text-gray-500 line-clamp-3">
-                  {item.description}
-                </p> */}
                   <p className="text-lg font-bold text-gray-800 mb-4">
                     ${item.price}
                   </p>
