@@ -19,14 +19,14 @@ const Navbar = () => {
         >
           Home
         </NavLink>
-        <NavLink
+        {/* <NavLink
           to="/About"
           className={({ isActive }) =>
             isActive ? "text-amber-500" : "text-white"
           }
         >
           About
-        </NavLink>
+        </NavLink> */}
         <NavLink
           to="/Contact"
           className={({ isActive }) =>
