@@ -120,7 +120,12 @@ const Products = () => {
                   <p className="text-lg font-bold text-gray-800 mb-4">
                     ${item.price}
                   </p>
-                  <button onClick={() =>{navigate(`/product/${item.id}`)}} className="w-full bg-fuchsia-600 hover:bg-fuchsia-700 text-white py-2 rounded-lg transition">
+                  <button
+                    onClick={() => {
+                      navigate(`/product/${item.id}`);
+                    }}
+                    className="w-full bg-fuchsia-600 hover:bg-fuchsia-700 text-white py-2 rounded-lg transition"
+                  >
                     Add to Cart
                   </button>
                 </Link>
@@ -128,7 +133,7 @@ const Products = () => {
             </div>
           </>
         )}
-        {/* Pagination */}
+
         <div className="flex justify-center mt-8 items-center gap-2 flex-wrap">
           <button
             onClick={handlePrev}
