@@ -2,7 +2,7 @@ import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Cart from "./pages/Cart";
-import About from "./pages/About";
+// import About from "./pages/About";
 import Contact from "./pages/Contact";
 import Home from "./pages/Home";
 import ProductDetail from "./pages/Product";
@@ -28,14 +28,14 @@ function App() {
             </>
           }
         />
-        <Route
+        {/* <Route
           path="/About"
           element={
             <>
               <Navbar /> <About />
             </>
           }
-        />
+        /> */}
         <Route
           path="/Contact"
           element={
