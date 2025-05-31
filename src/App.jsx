@@ -8,18 +8,51 @@ import Home from "./pages/Home";
 import ProductDetail from "./pages/Product";
 import ErrorPage from "./pages/ErrorPage";
 
-
 function App() {
   return (
     <BrowserRouter>
-      <Navbar/>
       <Routes>
-        <Route path="/" element={<Home/>}/>
-        <Route path="/product/:id" element={<ProductDetail/>}/>
-        <Route path="/About" element={<About/>}/>
-        <Route path="/Contact" element={<Contact/>}/>
-        <Route path="/cart" element={<Cart/>}/>
-        <Route path="*" element={<ErrorPage/>}/>
+        <Route
+          path="/"
+          element={
+            <>
+              <Navbar /> <Home />
+            </>
+          }
+        />
+        <Route
+          path="/product/:id"
+          element={
+            <>
+              <Navbar /> <ProductDetail />
+            </>
+          }
+        />
+        <Route
+          path="/About"
+          element={
+            <>
+              <Navbar /> <About />
+            </>
+          }
+        />
+        <Route
+          path="/Contact"
+          element={
+            <>
+              <Navbar /> <Contact />
+            </>
+          }
+        />
+        <Route
+          path="/cart"
+          element={
+            <>
+              <Navbar /> <Cart />
+            </>
+          }
+        />
+        <Route path="*" element={<ErrorPage />} />
       </Routes>
     </BrowserRouter>
   );

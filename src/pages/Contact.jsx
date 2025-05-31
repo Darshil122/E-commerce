@@ -22,7 +22,7 @@ const Contact = () => {
           Contact Sales
         </h2>
         <p className="mt-2 text-lg text-gray-600">
-          Aute magna irure deserunt veniam aliqua magna enim voluptate.
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt, qui?
         </p>
       </div>
 

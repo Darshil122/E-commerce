@@ -5,7 +5,7 @@ const ErrorPage = () => {
   const navigate = useNavigate();
   return (
     <>
-    <div className='mx-auto flex justify-center items-center'>
+    <div className='my-20 mx-auto flex justify-center items-center'>
       <h1>Page not found - <Link to="/" className='text-blue-600 underline'>Go to home</Link></h1>
     </div>
     </>
