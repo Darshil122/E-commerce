@@ -6,6 +6,7 @@ import About from "./pages/About";
 import Contact from "./pages/Contact";
 import Home from "./pages/Home";
 import ProductDetail from "./pages/Product";
+import ErrorPage from "./pages/ErrorPage";
 
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
         <Route path="/About" element={<About/>}/>
         <Route path="/Contact" element={<Contact/>}/>
         <Route path="/cart" element={<Cart/>}/>
+        <Route path="*" element={<ErrorPage/>}/>
       </Routes>
     </BrowserRouter>
   );
