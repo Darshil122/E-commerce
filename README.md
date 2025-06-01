@@ -40,7 +40,23 @@ Make sure you have the following installed:
 ### Installation
 
 ```bash
-git clone https://github.com/Darshil122/E-commerce.git
+git clone https://github.com/Darshil122/E-commerce.git   
+```
+
+---
+
+```bash
 cd E-commerce
+```
+
+---
+
+```bash
 npm install
+```
+
+---
+
+```bash
 npm run dev
+```
