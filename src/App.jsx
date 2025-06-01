@@ -13,6 +13,7 @@ import Home from "./pages/Home";
 import ProductDetail from "./pages/Product";
 import ErrorPage from "./pages/ErrorPage";
 import UserAuth from "./Auth/UserAuth";
+import Footer from "./components/Footer";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(
@@ -57,6 +58,7 @@ function App() {
           element={
             <PrivateRoute isLoggedIn={isLoggedIn}>
               <Home />
+              <Footer/>
             </PrivateRoute>
           }
         />
@@ -65,6 +67,7 @@ function App() {
           element={
             <PrivateRoute isLoggedIn={isLoggedIn}>
               <ProductDetail />
+              <Footer/>
             </PrivateRoute>
           }
         />
@@ -73,6 +76,7 @@ function App() {
           element={
             <PrivateRoute isLoggedIn={isLoggedIn}>
               <Contact />
+              <Footer/>
             </PrivateRoute>
           }
         />
@@ -81,6 +85,7 @@ function App() {
           element={
             <PrivateRoute isLoggedIn={isLoggedIn}>
               <Cart />
+              <Footer/>
             </PrivateRoute>
           }
         />

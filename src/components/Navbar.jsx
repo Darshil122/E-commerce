@@ -12,11 +12,11 @@ const Navbar = ({ isLoggedIn, onLogout }) => {
     <nav className="bg-gray-900 text-white p-4">
       <div className="flex justify-between items-center">
         <h1 className="text-2xl font-bold">Online Shopping</h1>
-        {/* Toggle button for mobile menu */}
+        {/* for mobile menu */}
         <button className="md:hidden" onClick={() => setMenuOpen(!menuOpen)}>
           {menuOpen ? <XIcon size={24} /> : <ListIcon size={24} />}
         </button>
-        {/* Menu links - hidden on small screens */}
+        {/* hidden on small screens */}
         <div className="hidden md:flex items-center gap-5">
           <NavLinks
             totalItems={totalItems}
@@ -58,7 +58,7 @@ const NavLinks = ({ totalItems, onLinkClick, isLoggedIn, onLogout }) => (
       Contact
     </NavLink>
 
-    {!isLoggedIn && (
+    {/* {!isLoggedIn && (
       <NavLink
         to="/Login"
         className={({ isActive }) =>
@@ -68,7 +68,7 @@ const NavLinks = ({ totalItems, onLinkClick, isLoggedIn, onLogout }) => (
       >
         Login
       </NavLink>
-    )}
+    )} */}
 
     {isLoggedIn && (
       <button onClick={onLogout} className="hover:underline">

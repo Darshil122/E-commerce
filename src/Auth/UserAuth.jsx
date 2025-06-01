@@ -20,15 +20,16 @@ const UserAuth = ({onLogin}) => {
       reset();
     } else {
       const stored = JSON.parse(localStorage.getItem("userData"));
+      // console.log(stored);
       if (
-        stored?.email === data.email &&
-        stored?.password === data.password
+        stored.email === data.email &&
+        stored.password === data.password
       ) {
         onLogin();
         navigate("/");
         alert(`Welcome back, ${stored.name || "User"}!`);
       } else {
-        alert("Invalid login credentials.");
+        alert("Email or Password invalid");
       }
       reset();
     }

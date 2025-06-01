@@ -3,7 +3,7 @@ import bgHome from "../assets/bgHome.png";
 const Home = () => {
   return (
     <>
-      <div className="">
+      <div>
         <img src={bgHome} alt="background-image" className="w-full h-[500px]" />
 
         <div className="absolute top-1/3 left-25 text-black max-w-md">
