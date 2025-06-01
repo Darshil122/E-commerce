@@ -1,12 +1,23 @@
-# React + Vite
+# **E-COMMERCE**
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+*Empower Your Shopping Experience, Effortlessly Simplified*
 
-Currently, two official plugins are available:
+![last commit](https://img.shields.io/github/last-commit/Darshil122/E-commerce)
+![today](https://img.shields.io/badge/today-blue)
+![javascript](https://img.shields.io/badge/javascript-96.7%25-blue)
+![languages](https://img.shields.io/badge/languages-3-blue)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## Expanding the ESLint configuration
+*Built with the tools and technologies:*
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+![JSON](https://img.shields.io/badge/JSON-black?logo=json&logoColor=white)
+![Markdown](https://img.shields.io/badge/Markdown-000000?logo=markdown)
+![npm](https://img.shields.io/badge/npm-red?logo=npm&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-yellow?logo=javascript&logoColor=black)
+![React](https://img.shields.io/badge/React-61DAFB?logo=react&logoColor=white)
+
+![Vite](https://img.shields.io/badge/Vite-646CFF?logo=vite&logoColor=white)
+![ESLint](https://img.shields.io/badge/ESLint-4B32C3?logo=eslint&logoColor=white)
+![Axios](https://img.shields.io/badge/Axios-5A29E4?logo=axios&logoColor=white)
+![React Hook Form](https://img.shields.io/badge/React_Hook_Form-EC5990?logo=reacthookform&logoColor=white)
