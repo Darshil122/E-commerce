@@ -41,6 +41,8 @@ const Navbar = ({ isLoggedIn, onLogout }) => {
   );
 };
 
+const user = JSON.parse(localStorage.getItem("userData"));
+
 const NavLinks = ({ totalItems, onLinkClick, isLoggedIn, onLogout }) => (
   <>
     <NavLink
@@ -71,7 +73,7 @@ const NavLinks = ({ totalItems, onLinkClick, isLoggedIn, onLogout }) => (
     )} */}
 
     {isLoggedIn && (
-      <button onClick={onLogout} className="hover:underline">
+      <button onClick={onLogout} className="cursor-pointer">
         Logout
       </button>
     )}
@@ -85,6 +87,7 @@ const NavLinks = ({ totalItems, onLinkClick, isLoggedIn, onLogout }) => (
         <span>({totalItems})</span>
       </div>
     </NavLink>
+    <button>{user ? `Welcome, ${user.name}` : ""}</button>
   </>
 );
 
