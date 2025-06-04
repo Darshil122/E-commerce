@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 const Products = () => {
   const [data, setData] = useState([]);
   const [filteredData, setFilteredData] = useState(data);
+  const [activeFilter, setActiveFilter] = useState("all");
   const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 12;
@@ -56,48 +57,82 @@ const Products = () => {
           "Loading..."
         ) : (
           <>
-            <div className="grid lg:grid-cols-8 gap-2 mb-5">
+            <div className="grid lg:grid-cols-7 gap-2 mb-5">
               <button
-                className="border border-fuchsia-600 text-fuchsia-600 py-1 rounded hover:bg-fuchsia-600 hover:text-white transition"
-                onClick={() => setFilteredData(data)}
+                className={`border py-1 rounded transition ${
+                  activeFilter === "all"
+                    ? "bg-fuchsia-600 text-white border-fuchsia-600"
+                    : "text-fuchsia-600 border-fuchsia-600 hover:bg-fuchsia-600 hover:text-white"
+                }`}
+                onClick={() => {
+                  setFilteredData(data);
+                  setActiveFilter("all");
+                }}
               >
                 All
               </button>
+
               <button
-                className="border border-fuchsia-600 text-fuchsia-600 py-1 rounded hover:bg-fuchsia-600 hover:text-white transition"
-                onClick={() =>
+                className={`border rounded transition ${
+                  activeFilter === "men's clothing"
+                    ? "bg-fuchsia-600 text-white border-fuchsia-600"
+                    : "text-fuchsia-600 border-fuchsia-600 hover:bg-fuchsia-600 hover:text-white"
+                }`}
+                onClick={() => {
                   setFilteredData(
                     data.filter((c) => c.category === "men's clothing")
-                  )
-                }
+                  );
+                  setActiveFilter("men's clothing");
+                  setCurrentPage(1);
+                }}
               >
                 Men's Clothing
               </button>
               <button
-                className="border border-fuchsia-600 text-fuchsia-600 py-1 rounded hover:bg-fuchsia-600 hover:text-white transition"
-                onClick={() =>
+                className={`border rounded transition ${
+                  activeFilter === "women's clothing"
+                    ? "bg-fuchsia-600 text-white border-fuchsia-600"
+                    : "text-fuchsia-600 border-fuchsia-600 hover:bg-fuchsia-600 hover:text-white"
+                }`}
+                onClick={() => {
                   setFilteredData(
                     data.filter((c) => c.category === "women's clothing")
-                  )
-                }
+                  );
+                  setActiveFilter("women's clothing");
+                  setCurrentPage(1);
+                }}
               >
                 Women's Clothing
               </button>
               <button
-                className="border border-fuchsia-600 text-fuchsia-600 py-1 rounded hover:bg-fuchsia-600 hover:text-white transition"
-                onClick={() =>
-                  setFilteredData(data.filter((c) => c.category === "jewelery"))
-                }
+                className={`border rounded transition ${
+                  activeFilter === "jewelery"
+                    ? "bg-fuchsia-600 text-white border-fuchsia-600"
+                    : "text-fuchsia-600 border-fuchsia-600 hover:bg-fuchsia-600 hover:text-white"
+                }`}
+                onClick={() => {
+                  setFilteredData(
+                    data.filter((c) => c.category === "jewelery")
+                  );
+                  setActiveFilter("jewelery");
+                  setCurrentPage(1);
+                }}
               >
                 Jewelery
               </button>
               <button
-                className="border border-fuchsia-600 text-fuchsia-600 py-1 rounded hover:bg-fuchsia-600 hover:text-white transition"
-                onClick={() =>
+                className={`border rounded transition ${
+                  activeFilter === "electronics"
+                    ? "bg-fuchsia-600 text-white border-fuchsia-600"
+                    : "text-fuchsia-600 border-fuchsia-600 hover:bg-fuchsia-600 hover:text-white"
+                }`}
+                onClick={() => {
                   setFilteredData(
                     data.filter((c) => c.category === "electronics")
-                  )
-                }
+                  );
+                  setActiveFilter("electronics");
+                  setCurrentPage(1);
+                }}
               >
                 Electronic
               </button>

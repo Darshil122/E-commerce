@@ -1,9 +1,11 @@
+import { EyeIcon, EyeSlashIcon } from "@phosphor-icons/react/dist/ssr";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 
-const UserAuth = ({onLogin}) => {
-  const [action, setAction] = useState("Sign Up");
+const UserAuth = ({ onLogin }) => {
+  const [action, setAction] = useState("Login");
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const navigate = useNavigate();
 
   const {
@@ -17,14 +19,12 @@ const UserAuth = ({onLogin}) => {
     if (action === "Sign Up") {
       localStorage.setItem("userData", JSON.stringify(data));
       alert("Account created successfully!");
+      setAction("Login");
       reset();
     } else {
       const stored = JSON.parse(localStorage.getItem("userData"));
       // console.log(stored);
-      if (
-        stored.email === data.email &&
-        stored.password === data.password
-      ) {
+      if (stored.email === data.email && stored.password === data.password) {
         onLogin();
         navigate("/");
         alert(`Welcome back, ${stored.name || "User"}!`);
@@ -44,7 +44,10 @@ const UserAuth = ({onLogin}) => {
       >
         {action === "Sign Up" && (
           <div className="mb-4">
-            <label htmlFor="name" className="block text-gray-700 font-medium pb-2">
+            <label
+              htmlFor="name"
+              className="block text-gray-700 font-medium pb-2"
+            >
               Name
             </label>
             <input
@@ -56,13 +59,18 @@ const UserAuth = ({onLogin}) => {
               placeholder="Enter your name"
             />
             {errors.name && (
-              <span className="text-red-500 text-sm">{errors.name.message}</span>
+              <span className="text-red-500 text-sm">
+                {errors.name.message}
+              </span>
             )}
           </div>
         )}
 
         <div className="mb-4">
-          <label htmlFor="email" className="block text-gray-700 font-medium pb-2">
+          <label
+            htmlFor="email"
+            className="block text-gray-700 font-medium pb-2"
+          >
             Email
           </label>
           <input
@@ -85,7 +93,10 @@ const UserAuth = ({onLogin}) => {
         </div>
 
         <div className="mb-4">
-          <label htmlFor="password" className="block text-gray-700 font-medium pb-2">
+          <label
+            htmlFor="password"
+            className="block text-gray-700 font-medium pb-2"
+          >
             Password
           </label>
           <input
@@ -96,14 +107,23 @@ const UserAuth = ({onLogin}) => {
                 message: "Password must be at least 6 characters",
               },
             })}
-            type="password"
+            type={isPasswordVisible ? "text" : "password"}
             name="password"
             id="password"
             className="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-indigo-400"
             placeholder="Enter your password"
           />
+          <button
+          type="button"
+            onClick={() => setIsPasswordVisible(!isPasswordVisible)}
+            className="absolute transform text-gray-500 my-3 -translate-x-7"
+          >
+            {isPasswordVisible ? <EyeIcon weight="duotone" size={20}/> : <EyeSlashIcon weight="duotone" size={20}/>}
+          </button>
           {errors.password && (
-            <span className="text-red-500 text-sm">{errors.password.message}</span>
+            <span className="text-red-500 text-sm">
+              {errors.password.message}
+            </span>
           )}
         </div>
 
