@@ -33,7 +33,7 @@ const Cart = () => {
                   <img
                     src={item.image}
                     alt={item.title}
-                    className="w-24 h-24 object-cover"
+                    className="w-24 h-24"
                   />
                   <div>
                     <h3 className="font-semibold text-lg">{item.title}</h3>

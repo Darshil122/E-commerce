@@ -5,11 +5,14 @@ import App from "./App.jsx";
 import { Provider } from "react-redux";
 import store from "./store/Store.js";
 import { BrowserRouter } from "react-router-dom";
+import { ThemeProvider } from "@material-tailwind/react";
 
 createRoot(document.getElementById("root")).render(
-  <BrowserRouter>
-  <Provider store={store}>
-    <App />
-  </Provider>
-  </BrowserRouter>
+  <ThemeProvider>
+    <BrowserRouter>
+      <Provider store={store}>
+        <App />
+      </Provider>
+    </BrowserRouter>
+  </ThemeProvider>
 );

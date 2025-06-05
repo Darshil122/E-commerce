@@ -72,7 +72,7 @@ const NavLinks = ({ totalItems, onLinkClick, isLoggedIn, onLogout }) => (
       <Menu as="div" className="relative">
         <Menu.Button className="inline-flex items-center gap-1 text-white hover:text-amber-400 outline-none">
           {user.name}
-          <CaretCircleDownIcon className="h-5 w-5 text-white" />
+          <CaretCircleDownIcon className="h-5 w-5 text-white" weight="bold" />
         </Menu.Button>
         <Menu.Items className="absolute right-0 mt-2 w-30 origin-top-right rounded-md bg-white outline-none">
           <div className="py-1">
