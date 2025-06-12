@@ -59,10 +59,18 @@ const Cart = () => {
                   <span className="text-base font-medium">{item.quantity}</span>
                   <button
                     aria-label="Increase quantity"
-                    className="px-3 py-1 border border-gray-300 rounded text-gray-700 hover:bg-gray-100 transition"
-                    onClick={() =>
-                      dispatch(updateQuantity({ id: item.id, delta: 1 }))
-                    }
+                    className={`px-3 py-1 border border-gray-300 rounded text-gray-700 transition
+                      ${
+                        item.quantity >= 10
+                          ? "bg-gray-200 cursor-not-allowed text-gray-400"
+                          : "hover:bg-gray-100"
+                      }
+                    `}
+                    onClick={() => {
+                      if (item.quantity < 10) {
+                        dispatch(updateQuantity({ id: item.id, delta: 1 }));
+                      }
+                    }}
                   >
                     +
                   </button>
@@ -85,10 +93,9 @@ const Cart = () => {
 
             <div className="flex flex-col sm:flex-row gap-3">
               <button
-                onClick={() => dispatch(clearCart())}
-                className="bg-red-600 hover:bg-red-500 text-white px-6 py-2 rounded shadow-sm transition"
+                className="bg-amber-300 hover:bg-amber-200 text-white px-6 py-2 rounded shadow-sm transition"
               >
-                Clear Cart
+                Buy Now
               </button>
               <button
                 onClick={() => navigate("/")}
