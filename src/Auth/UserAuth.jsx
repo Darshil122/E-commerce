@@ -15,23 +15,34 @@ const UserAuth = ({ onLogin }) => {
     formState: { errors },
   } = useForm();
 
-  const formSubmit = (data) => {
-    if (action === "Sign Up") {
-      localStorage.setItem("userData", JSON.stringify(data));
-      alert("Account created successfully!");
-      setAction("Login");
-      reset();
-    } else {
-      const stored = JSON.parse(localStorage.getItem("userData"));
-      // console.log(stored);
-      if (stored.email === data.email && stored.password === data.password) {
+  const formSubmit = async (data) => {
+    try {
+      const response = await fetch("http://localhost:5000/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...data, action }),
+      });
+
+      console.log("Response:", response);
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        alert(result.message || "Login failed.");
+        return;
+      }
+
+      alert(result.message || "Success!");
+      if (action === "Login") {
         onLogin();
         navigate("/");
-        alert(`Welcome back, ${stored.name || "User"}!`);
       } else {
-        alert("Email or Password invalid");
+        setAction("Login");
       }
       reset();
+    } catch (err) {
+      console.error("Fetch error:", err);
+      alert("Something went wrong.");
     }
   };
 
@@ -114,11 +125,15 @@ const UserAuth = ({ onLogin }) => {
             placeholder="Enter your password"
           />
           <button
-          type="button"
+            type="button"
             onClick={() => setIsPasswordVisible(!isPasswordVisible)}
             className="absolute transform text-gray-500 my-3 -translate-x-7"
           >
-            {isPasswordVisible ? <EyeIcon weight="duotone" size={20}/> : <EyeSlashIcon weight="duotone" size={20}/>}
+            {isPasswordVisible ? (
+              <EyeIcon weight="duotone" size={20} />
+            ) : (
+              <EyeSlashIcon weight="duotone" size={20} />
+            )}
           </button>
           {errors.password && (
             <span className="text-red-500 text-sm">
