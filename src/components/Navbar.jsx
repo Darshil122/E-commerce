@@ -49,7 +49,7 @@ const Navbar = ({ isLoggedIn, onLogout }) => {
   );
 };
 
-// const user = JSON.parse(localStorage.getItem("userData"));
+const user = JSON.parse(localStorage.getItem("userData"));
 
 const NavLinks = ({ totalItems, onLinkClick, isLoggedIn, onLogout }) => (
   <>
@@ -71,7 +71,7 @@ const NavLinks = ({ totalItems, onLinkClick, isLoggedIn, onLogout }) => (
     {isLoggedIn && (
       <Menu as="div" className="relative">
         <Menu.Button className="inline-flex items-center gap-1 text-white hover:text-amber-400 outline-none">
-          {/* {user.name} */}user
+          {user.name}
           <CaretCircleDownIcon className="h-5 w-5 text-white" weight="bold" />
         </Menu.Button>
         <Menu.Items className="absolute right-0 mt-2 w-30 origin-top-right rounded-md bg-white outline-none">
