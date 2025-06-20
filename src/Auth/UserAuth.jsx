@@ -17,7 +17,7 @@ const UserAuth = ({ onLogin }) => {
 
   const formSubmit = async (data) => {
     try {
-      const response = await fetch("/api/index", {
+      const response = await fetch(`https://ecommerce-backend-eta-tawny.vercel.app/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ ...data, action }),
