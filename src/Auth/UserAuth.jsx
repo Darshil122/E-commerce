@@ -41,8 +41,8 @@ const UserAuth = ({ onLogin }) => {
       }
       reset();
     } catch (err) {
-      console.error("Fetch error:", err);
-      alert("Something went wrong.");
+      alert("Fetch error:", err);
+      // alert("Something went wrong.");
     }
   };
 
