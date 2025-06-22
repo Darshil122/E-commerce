@@ -17,7 +17,7 @@ const UserAuth = ({ onLogin }) => {
 
   const formSubmit = async (data) => {
     try {
-      const response = await fetch("https://e-commerce-api-snowy-seven.vercel.app/login", {
+      const response = await fetch("https://e-commerce-api-darshil122s-projects.vercel.app/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ ...data, action }),
