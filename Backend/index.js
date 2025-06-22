@@ -7,9 +7,8 @@ const app = express();
 
 app.use(express.json());
 app.use(cors({
-  origin: "https://e-commerce-jade-tau-24.vercel.app/",
+  origin: ["https://e-commerce-jade-tau-24.vercel.app", "http://localhost:5173"],
   methods:["POST", "GET"],
-  credentials: true,
 }));
 
 mongoose
