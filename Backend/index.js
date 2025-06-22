@@ -1,15 +1,18 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
+const dotenv = require("dotenv");
+dotenv.config();
 const app = express();
 
 app.use(express.json());
-app.use(cors())
+app.use(cors());
 
 mongoose
-  .connect(
-    "mongodb+srv://darshildabhi:darshil2005@cluster0.gofcbib.mongodb.net/e-commerce?retryWrites=true&w=majority&appName=Cluster0"
-  )
+  .connect(process.env.MONGODB_URL, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
   .then(() => console.log("Database Connected"))
   .catch((error) => console.log(error));
 
@@ -18,7 +21,7 @@ const userSchema = mongoose.Schema(
     name: { type: String, required: true },
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
-    action:{type:String}
+    action: { type: String },
   },
   { timestamps: true }
 );
@@ -36,7 +39,9 @@ app.post("/login", async (req, res) => {
       }
 
       const data = await User.create({ name, email, password });
-      return res.status(201).json({ message: "User created successfully", data });
+      return res
+        .status(201)
+        .json({ message: "User created successfully", data });
     }
 
     if (action === "Login") {
@@ -48,13 +53,11 @@ app.post("/login", async (req, res) => {
     }
 
     return res.status(400).json({ error: "Invalid action" });
-
   } catch (err) {
     console.error("Error:", err);
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
-
 
 app.get("/", (req, res) => {
   res.send("Hello World");
