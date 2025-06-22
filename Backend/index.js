@@ -3,46 +3,33 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const dotenv = require("dotenv");
 dotenv.config();
-
 const app = express();
 
-const allowedOrigins = [
-  "http://localhost:5173",
-  "https://e-commerce-jade-tau-24.vercel.app",
-];
-
-app.use(
-  cors({
-    origin: function (origin, callback) {
-      if (!origin) return callback(null, true);
-      if (allowedOrigins.includes(origin)) return callback(null, true);
-      return callback(new Error("Not allowed by CORS"));
-    },
-    methods: ["GET", "POST", "OPTIONS"],
-    credentials: true, // only if you're using cookies or sessions
-  })
-);
-
-// app.options("*", cors());
 app.use(express.json());
+app.use(cors({
+  origin: "https://e-commerce-jade-tau-24.vercel.app",
+  methods:["POST", "GET"],
+  // credentials: true,
+}));
 
-mongoose.connect(process.env.MONGODB_URL, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-})
-.then(() => console.log("MongoDB connected"))
-.catch((err) => console.log("MongoDB error", err));
-
+mongoose
+  .connect(process.env.MONGODB_URL, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(() => console.log("Database Connected"))
+  .catch((error) => console.log(error));
 
 const userSchema = mongoose.Schema(
   {
-    name: { type: String},
+    name: { type: String, required: true },
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     action: { type: String },
   },
   { timestamps: true }
 );
+
 const User = mongoose.model("user", userSchema);
 
 app.post("/login", async (req, res) => {
@@ -54,6 +41,7 @@ app.post("/login", async (req, res) => {
       if (existingUser) {
         return res.status(400).json({ error: "Email already exists" });
       }
+
       const data = await User.create({ name, email, password });
       return res
         .status(201)
