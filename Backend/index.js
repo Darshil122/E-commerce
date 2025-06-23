@@ -41,13 +41,13 @@ app.post("/login", async (req, res) => {
       const data = await User.create({ name, email, password });
       return res
         .status(201)
-        .json({ message: "User created successfully", data });
+        .json({ message: "User created successfully"});
     }
 
     if (action === "Login") {
       const user = await User.findOne({ email });
       if (!user || user.password !== password) {
-        return res.status(400).json({ error: "Invalid email or password" });
+        return res.status(400).json({ message: "Invalid email or password" });
       }
       return res.status(200).json({ message: "Login successful", user });
     }

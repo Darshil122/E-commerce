@@ -40,7 +40,7 @@ const UserAuth = ({ onLogin }) => {
       }
       reset();
     } catch (err) {
-      console.log(err);
+      console.log("Invalid Id/Password",err);
     }
   };
 
@@ -66,6 +66,7 @@ const UserAuth = ({ onLogin }) => {
               id="name"
               className="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-indigo-400"
               placeholder="Enter your name"
+              autoComplete="name"
             />
             {errors.name && (
               <span className="text-red-500 text-sm">
@@ -95,6 +96,7 @@ const UserAuth = ({ onLogin }) => {
             id="email"
             className="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-indigo-400"
             placeholder="Enter your email"
+            autoComplete="email"
           />
           {errors.email && (
             <span className="text-red-500 text-sm">{errors.email.message}</span>
