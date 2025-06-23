@@ -2,6 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const dotenv = require("dotenv");
+const jwt = require("jsonwebtoken");
 dotenv.config();
 const app = express();
 
@@ -35,27 +36,52 @@ app.post("/login", async (req, res) => {
     if (action === "Sign Up") {
       const existingUser = await User.findOne({ email });
       if (existingUser) {
-        return res.status(400).json({ error: "Email already exists" });
+        return res.status(400).json({ message: "Email already exists" });
       }
 
-      const data = await User.create({ name, email, password });
-      return res
-        .status(201)
-        .json({ message: "User created successfully"});
+      const newUser = await User.create({ name, email, password });
+      const token = jwt.sign(
+        { id: newUser._id, email },
+        process.env.JWT_SECRET,
+        {
+          expiresIn: "1h",
+        }
+      );
+      return res.status(201).json({
+        message: "User created successfully",
+        token,
+        user: {
+          name: newUser.name,
+          email: newUser.email,
+        },
+      });
     }
 
     if (action === "Login") {
-      const user = await User.findOne({ email });
-      if (!user || user.password !== password) {
+      const loginUser = await User.findOne({ email });
+      if (!loginUser || loginUser.password !== password) {
         return res.status(400).json({ message: "Invalid email or password" });
       }
-      return res.status(200).json({ message: "Login successful", user });
+      const token = jwt.sign(
+        { id: loginUser._id, email },
+        process.env.JWT_SECRET,
+        {
+          expiresIn: "1h",
+        }
+      );
+      return res
+        .status(200)
+        .json({
+          message: "Login successful",
+          token,
+          user: { name: loginUser.name, email: loginUser.email },
+        });
     }
 
-    return res.status(400).json({ error: "Invalid action" });
+    return res.status(400).json({ message: "Invalid action" });
   } catch (err) {
     console.error("Error:", err);
-    res.status(500).json({ error: "Internal Server Error" });
+    res.status(500).json({ message: "Internal Server Error" });
   }
 });
 

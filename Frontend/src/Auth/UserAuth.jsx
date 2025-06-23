@@ -24,7 +24,10 @@ const UserAuth = ({ onLogin }) => {
       });
 
       const result = await response.json();
-      // alert(result.message || result.error);
+      if (result.token) {
+        localStorage.setItem("token", result.token);
+        localStorage.setItem("user", JSON.stringify(result.user));
+      }
 
       if (!response.ok) {
         alert(result.message);
@@ -40,7 +43,7 @@ const UserAuth = ({ onLogin }) => {
       }
       reset();
     } catch (err) {
-      console.log("Invalid Id/Password",err);
+      console.log("Invalid Id/Password", err);
     }
   };
 

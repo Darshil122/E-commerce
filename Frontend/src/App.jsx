@@ -28,6 +28,8 @@ function App() {
   const handleLogout = () => {
     setIsLoggedIn(false);
     localStorage.removeItem("isLoggedIn");
+    localStorage.removeItem("user");
+    localStorage.removeItem("token");
   };
 
   const location = useLocation();
@@ -58,7 +60,7 @@ function App() {
           element={
             <PrivateRoute isLoggedIn={isLoggedIn}>
               <Home />
-              <Footer/>
+              <Footer />
             </PrivateRoute>
           }
         />
@@ -67,7 +69,7 @@ function App() {
           element={
             <PrivateRoute isLoggedIn={isLoggedIn}>
               <ProductDetail />
-              <Footer/>
+              <Footer />
             </PrivateRoute>
           }
         />
@@ -76,7 +78,7 @@ function App() {
           element={
             <PrivateRoute isLoggedIn={isLoggedIn}>
               <Contact />
-              <Footer/>
+              <Footer />
             </PrivateRoute>
           }
         />
@@ -85,7 +87,7 @@ function App() {
           element={
             <PrivateRoute isLoggedIn={isLoggedIn}>
               <Cart />
-              <Footer/>
+              <Footer />
             </PrivateRoute>
           }
         />
