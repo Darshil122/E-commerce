@@ -10,13 +10,11 @@ app.use(express.json());
 app.use(cors());
 
 mongoose
-  .connect(process.env.MONGODB_URL, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
+  .connect(process.env.MONGODB_URL)
   .then(() => console.log("Database Connected"))
   .catch((error) => console.log(error));
 
+// User Schema
 const userSchema = mongoose.Schema(
   {
     name: { type: String, required: true },
@@ -29,6 +27,50 @@ const userSchema = mongoose.Schema(
 
 const User = mongoose.model("user", userSchema);
 
+// Product Schema
+
+const productSchema = mongoose.Schema(
+  {
+    title: { type: String, required: true },
+    description: String,
+    category: String,
+    price: { type: Number, required: true },
+    rating: { type: Number, default: 0 },
+    image: String,
+  },
+  { timestamps: true }
+);
+
+const Product = mongoose.model("product", productSchema);
+
+app
+  .route("/products")
+  .post(async (req, res) => {
+    const newProduct = await Product.create(req.body);
+    res.json(newProduct);
+    if (newProduct) {
+      return res
+        .status(201)
+        .json({ message: "New Product Added", product: newProduct });
+    } else {
+      res.status(400).json({ message: err.message });
+    }
+  })
+  .get(async (req, res) => {
+    const products = await Product.find();
+    res.json(products);
+  });
+
+app.delete("/products/:id", async (req, res) => {
+    const deleted = await Product.findOneAndDelete({ id: req.params.id });
+    if(deleted){
+      return res.json({ message: "Product deleted"});
+    }
+  
+  
+});
+
+// User Rutes
 app.post("/login", async (req, res) => {
   const { name, email, password, action } = req.body;
 
@@ -69,13 +111,11 @@ app.post("/login", async (req, res) => {
           expiresIn: "1h",
         }
       );
-      return res
-        .status(200)
-        .json({
-          message: "Login successful",
-          token,
-          user: { name: loginUser.name, email: loginUser.email },
-        });
+      return res.status(200).json({
+        message: "Login successful",
+        token,
+        user: { name: loginUser.name, email: loginUser.email },
+      });
     }
 
     return res.status(400).json({ message: "Invalid action" });

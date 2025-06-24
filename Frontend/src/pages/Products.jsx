@@ -32,7 +32,7 @@ const Products = () => {
   const getProduct = async () => {
     try {
       setLoading(true);
-      const response = await axios.get("https://fakestoreapi.com/products");
+      const response = await axios.get("https://e-commerce-1jgv.vercel.app/products");
       setData(response.data);
       setFilteredData(response.data);
       setLoading(false);
@@ -65,10 +65,11 @@ const Products = () => {
   // category filter
   const categories = [
     "all",
-    "men's clothing",
-    "women's clothing",
-    "jewelery",
-    "electronics",
+    "Electronics",
+    "Furniture",
+    "Fitness",
+    "Home Appliances",
+    "Accessories"
   ];
 
   const [selectedProduct, setSelectedProduct] = useState(null);
@@ -211,7 +212,7 @@ const Products = () => {
                     e.preventDefault();
                     handleOpen(item);
                   }}
-                  key={item.id}
+                  key={item._id}
                   className="bg-white p-4 rounded-xl shadow hover:shadow-lg transition duration-300 cursor-pointer"
                 >
                   <img
