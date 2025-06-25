@@ -78,7 +78,7 @@ npm install
 ---
 
 ### Environment Variables
--Create a Create a .env file in your backend root and add
+- Create a Create a .env file in your backend root and add
 ```bash
 PORT=5000
 MONGO_URI=your_mongodb_atlas_connection_string
