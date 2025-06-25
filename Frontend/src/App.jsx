@@ -17,13 +17,8 @@ import Footer from "./components/Footer";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(
-    localStorage.getItem("isLoggedIn") === "true"
+    !!localStorage.getItem("token")
   );
-
-  const handleLogin = () => {
-    setIsLoggedIn(true);
-    localStorage.setItem("isLoggedIn", "true");
-  };
 
   const handleLogout = () => {
     setIsLoggedIn(false);
@@ -41,9 +36,7 @@ function App() {
 
   return (
     <>
-      {!hideNavbar && (
-        <Navbar isLoggedIn={isLoggedIn} onLogout={handleLogout} />
-      )}
+      {!hideNavbar && <Navbar onLogout={handleLogout} />}
       <Routes>
         <Route
           path="/Login"
@@ -51,23 +44,23 @@ function App() {
             isLoggedIn ? (
               <Navigate to="/" />
             ) : (
-              <UserAuth onLogin={handleLogin} />
+              <UserAuth onLogin={() => setIsLoggedIn(true)} />
             )
           }
         />
         <Route
           path="/"
           element={
-            <PrivateRoute isLoggedIn={isLoggedIn}>
+            <PrivateRoute>
               <Home />
               <Footer />
             </PrivateRoute>
           }
         />
         <Route
-          path="/product/:id"
+          path="/product"
           element={
-            <PrivateRoute isLoggedIn={isLoggedIn}>
+            <PrivateRoute>
               <ProductDetail />
               <Footer />
             </PrivateRoute>
@@ -76,7 +69,7 @@ function App() {
         <Route
           path="/Contact"
           element={
-            <PrivateRoute isLoggedIn={isLoggedIn}>
+            <PrivateRoute>
               <Contact />
               <Footer />
             </PrivateRoute>
@@ -85,7 +78,7 @@ function App() {
         <Route
           path="/cart"
           element={
-            <PrivateRoute isLoggedIn={isLoggedIn}>
+            <PrivateRoute>
               <Cart />
               <Footer />
             </PrivateRoute>
@@ -96,8 +89,11 @@ function App() {
     </>
   );
 }
-const PrivateRoute = ({ isLoggedIn, children }) => {
-  return isLoggedIn ? children : <Navigate to="/Login" />;
+
+const PrivateRoute = ({ children }) => {
+  const token = localStorage.getItem("token");
+
+  return token ? children : <Navigate to="/Login" />;
 };
 
 export default App;

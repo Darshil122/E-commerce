@@ -9,7 +9,7 @@ import {
 import { useSelector } from "react-redux";
 import { Menu } from "@headlessui/react";
 
-const Navbar = ({ isLoggedIn, onLogout }) => {
+const Navbar = ({ onLogout }) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [userName, setUserName] = useState("");
 
@@ -38,7 +38,6 @@ const Navbar = ({ isLoggedIn, onLogout }) => {
           <NavLinks
             userName={userName}
             totalItems={totalItems}
-            isLoggedIn={isLoggedIn}
             onLogout={onLogout}
           />
         </div>
@@ -50,7 +49,6 @@ const Navbar = ({ isLoggedIn, onLogout }) => {
           <NavLinks
             totalItems={totalItems}
             userName={userName}
-            isLoggedIn={isLoggedIn}
             onLogout={onLogout}
             onLinkClick={() => setMenuOpen(false)}
           />
@@ -64,7 +62,6 @@ const NavLinks = ({
   userName,
   totalItems,
   onLinkClick,
-  isLoggedIn,
   onLogout,
 }) => (
   <>
@@ -87,7 +84,7 @@ const NavLinks = ({
       Contact
     </NavLink>
 
-    {isLoggedIn && (
+    
       <Menu as="div" className="relative">
         <Menu.Button className="inline-flex items-center gap-1 text-white hover:text-amber-400 outline-none">
           {userName.charAt(0).toUpperCase() + userName.slice(1).toLowerCase()}
@@ -97,9 +94,7 @@ const NavLinks = ({
           <div className="py-1">
             <Menu.Item>
               <button
-                onClick={() => {
-                  onLogout();
-                }}
+                onClick={onLogout}
                 className="block px-9.5 py-2 text-sm text-gray-700 data-focus:bg-gray-300 data-focus:text-gray-900 outline-hidden"
               >
                 Logout
@@ -108,7 +103,7 @@ const NavLinks = ({
           </div>
         </Menu.Items>
       </Menu>
-    )}
+    
 
     <NavLink
       to="/cart"
