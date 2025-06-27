@@ -6,13 +6,14 @@ import {jwtDecode} from "jwt-decode";
 const getUserId = () => {
   const user = localStorage.getItem("user");
   if (user) {
-    // const decoded = jwtDecode(token);
-    const uId = user._id;
-    console.log(uId);
+    const parsedUser = JSON.parse(user);
+    const uId = parsedUser?.user?._id;
+    console.log("User ID:", uId);
     return uId;
   }
   return null;
 };
+
 
 // ======================
 // 🔁 Async Thunks
