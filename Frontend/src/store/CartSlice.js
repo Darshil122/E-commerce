@@ -21,7 +21,7 @@ const getUserId = () => {
 // Fetch user cart from backend
 export const fetchCart = createAsyncThunk("cart/fetchCart", async () => {
   const userId = getUserId();
-  const res = await axios.get(`http://localhost:5000/api/cart/${userId}`);
+  const res = await axios.get(`https://e-commerce-1jgv.vercel.app/cart/${userId}`);
   return res.data.items;
 });
 
@@ -30,7 +30,7 @@ export const syncAddToCart = createAsyncThunk(
   "cart/syncAddToCart",
   async (product) => {
     const userId = getUserId();
-    const res = await axios.post(`http://localhost:5000/api/cart/add`, {
+    const res = await axios.post(`https://e-commerce-1jgv.vercel.app/cart/add`, {
       userId,
       product,
     });
@@ -44,7 +44,7 @@ export const syncRemoveFromCart = createAsyncThunk(
   async (productId) => {
     const userId = getUserId();
     const res = await axios.delete(
-      `http://localhost:5000/api/cart/remove/${userId}/${productId}`
+      `https://e-commerce-1jgv.vercel.app/cart/remove/${userId}/${productId}`
     );
     return res.data.cart.items;
   }
@@ -56,7 +56,7 @@ export const syncUpdateQuantity = createAsyncThunk(
   async ({ id, delta }) => {
     const userId = getUserId();
     const res = await axios.patch(
-      `http://localhost:5000/api/cart/update/${userId}/${id}`,
+      `https://e-commerce-1jgv.vercel.app/cart/update/${userId}/${id}`,
       {
         delta,
       }
@@ -70,7 +70,7 @@ export const syncClearCart = createAsyncThunk(
   "cart/syncClearCart",
   async () => {
     const userId = getUserId();
-    await axios.delete(`http://localhost:5000/api/cart/clear/${userId}`);
+    await axios.delete(`https://e-commerce-1jgv.vercel.app/cart/clear/${userId}`);
     return [];
   }
 );
