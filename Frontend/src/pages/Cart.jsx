@@ -23,7 +23,7 @@ const Cart = () => {
     0
   );
 
-  // Fetch cart items from backend when component mounts
+  // ✅ Fetch cart from backend and sync to Redux
   useEffect(() => {
     const fetchCart = async () => {
       if (!userId) return;
@@ -37,9 +37,18 @@ const Cart = () => {
             },
           }
         );
+
         const items = res.data?.items || [];
+
         items.forEach((item) => {
-          dispatch(addToCart({ ...item, quantity: item.quantity }));
+          if (item.product) {
+            dispatch(
+              addToCart({
+                ...item.product,
+                quantity: item.quantity,
+              })
+            );
+          }
         });
       } catch (err) {
         console.error("Failed to fetch cart:", err);
@@ -49,6 +58,7 @@ const Cart = () => {
     fetchCart();
   }, [dispatch, userId, token]);
 
+  // ✅ Quantity Change
   const handleQuantityChange = async (id, delta) => {
     dispatch(updateQuantity({ id, delta }));
     try {
@@ -66,6 +76,7 @@ const Cart = () => {
     }
   };
 
+  // ✅ Remove from cart
   const handleRemove = async (id) => {
     dispatch(removeFromCart(id));
     try {
@@ -82,13 +93,17 @@ const Cart = () => {
     }
   };
 
+  // ✅ Clear cart on Buy Now
   const handleBuyNow = async () => {
     try {
-      await axios.delete(`https://e-commerce-1jgv.vercel.app/cart/clear/${userId}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      await axios.delete(
+        `https://e-commerce-1jgv.vercel.app/cart/clear/${userId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       dispatch(clearCart());
       alert("Order placed successfully!");
     } catch (err) {
@@ -140,13 +155,11 @@ const Cart = () => {
                   <span className="text-base font-medium">{item.quantity}</span>
                   <button
                     aria-label="Increase quantity"
-                    className={`px-3 py-1 border border-gray-300 rounded text-gray-700 transition
-                      ${
-                        item.quantity >= 10
-                          ? "bg-gray-200 cursor-not-allowed text-gray-400"
-                          : "hover:bg-gray-100"
-                      }
-                    `}
+                    className={`px-3 py-1 border border-gray-300 rounded text-gray-700 transition ${
+                      item.quantity >= 10
+                        ? "bg-gray-200 cursor-not-allowed text-gray-400"
+                        : "hover:bg-gray-100"
+                    }`}
                     onClick={() => {
                       if (item.quantity < 10) {
                         handleQuantityChange(item._id, 1);
