@@ -24,7 +24,7 @@ router.post("/add", async (req, res) => {
     }
   }
 
-  await cart.create();
+  await cart.save();
   res.json(cart);
 });
 
@@ -35,7 +35,7 @@ router.delete("/remove/:userId/:productId", async (req, res) => {
   const cart = await Cart.findOne({ userId });
   if (cart) {
     cart.items = cart.items.filter((item) => item._id !== productId);
-    await cart.create();
+    await cart.save();
     res.json({ cart });
   } else {
     res.status(404).json({ message: "Cart not found" });
@@ -52,7 +52,7 @@ router.patch("/update/:userId/:productId", async (req, res) => {
     const item = cart.items.find((i) => i._id === productId);
     if (item) {
       item.quantity = Math.max(1, item.quantity + delta);
-      await cart.create();
+      await cart.save();
       res.json({ cart });
     } else {
       res.status(404).json({ message: "Item not found in cart" });

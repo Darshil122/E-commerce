@@ -30,7 +30,7 @@ const Cart = () => {
 
       try {
         const res = await axios.get(
-          `http://localhost:5000/api/cart/${userId}`,
+          `https://e-commerce-1jgv.vercel.app/cart/${userId}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -53,7 +53,7 @@ const Cart = () => {
     dispatch(updateQuantity({ id, delta }));
     try {
       await axios.patch(
-        `http://localhost:5000/api/cart/update/${userId}/${id}`,
+        `https://e-commerce-1jgv.vercel.app/cart/update/${userId}/${id}`,
         { delta },
         {
           headers: {
@@ -70,7 +70,7 @@ const Cart = () => {
     dispatch(removeFromCart(id));
     try {
       await axios.delete(
-        `http://localhost:5000/api/cart/remove/${userId}/${id}`,
+        `https://e-commerce-1jgv.vercel.app/cart/remove/${userId}/${id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -84,7 +84,7 @@ const Cart = () => {
 
   const handleBuyNow = async () => {
     try {
-      await axios.delete(`http://localhost:5000/api/cart/clear/${userId}`, {
+      await axios.delete(`https://e-commerce-1jgv.vercel.app/cart/clear/${userId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
