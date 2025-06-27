@@ -108,6 +108,7 @@ const Products = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               <div className="flex justify-center items-center">
                 <img
+                  loading="lazy"
                   src={selectedProduct.image}
                   alt={selectedProduct.title}
                   className="h-72 w-72 sm:h-96 sm:w-96 object-contain"
@@ -217,6 +218,7 @@ const Products = () => {
                   className="bg-white p-4 rounded-xl shadow hover:shadow-lg transition duration-300 cursor-pointer"
                 >
                   <img
+                    loading="lazy"
                     src={item.image}
                     alt={item.title}
                     className="w-32 h-36 object-contain mx-auto mb-4"

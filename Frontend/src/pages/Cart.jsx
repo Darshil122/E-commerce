@@ -1,17 +1,100 @@
 import { useSelector, useDispatch } from "react-redux";
-import { removeFromCart, updateQuantity, clearCart } from "../store/CartSlice";
+import {
+  removeFromCart,
+  updateQuantity,
+  clearCart,
+  addToCart,
+} from "../store/CartSlice";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import axios from "axios";
 
 const Cart = () => {
   const cart = useSelector((state) => state.cart.items);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const user = JSON.parse(localStorage.getItem("user"));
+  const userId = user?.user?._id;
+  const token = user?.token;
 
   const totalPrice = cart.reduce(
     (total, item) => total + item.price * item.quantity,
     0
   );
 
-  const navigate = useNavigate();
+  // Fetch cart items from backend when component mounts
+  useEffect(() => {
+    const fetchCart = async () => {
+      if (!userId) return;
+
+      try {
+        const res = await axios.get(
+          `http://localhost:5000/api/cart/${userId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        const items = res.data?.items || [];
+        items.forEach((item) => {
+          dispatch(addToCart({ ...item, quantity: item.quantity }));
+        });
+      } catch (err) {
+        console.error("Failed to fetch cart:", err);
+      }
+    };
+
+    fetchCart();
+  }, [dispatch, userId, token]);
+
+  const handleQuantityChange = async (id, delta) => {
+    dispatch(updateQuantity({ id, delta }));
+    try {
+      await axios.patch(
+        `http://localhost:5000/api/cart/update/${userId}/${id}`,
+        { delta },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+    } catch (err) {
+      console.error("Failed to update quantity:", err);
+    }
+  };
+
+  const handleRemove = async (id) => {
+    dispatch(removeFromCart(id));
+    try {
+      await axios.delete(
+        `http://localhost:5000/api/cart/remove/${userId}/${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+    } catch (err) {
+      console.error("Failed to remove item:", err);
+    }
+  };
+
+  const handleBuyNow = async () => {
+    try {
+      await axios.delete(`http://localhost:5000/api/cart/clear/${userId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      dispatch(clearCart());
+      alert("Order placed successfully!");
+    } catch (err) {
+      console.error("Failed to clear cart:", err);
+    }
+  };
 
   return (
     <div className="max-w-5xl mx-auto p-4 sm:p-6">
@@ -50,9 +133,7 @@ const Cart = () => {
                   <button
                     aria-label="Decrease quantity"
                     className="px-3 py-1 border border-gray-300 rounded text-gray-700 hover:bg-gray-100 transition"
-                    onClick={() =>
-                      dispatch(updateQuantity({ id: item._id, delta: -1 }))
-                    }
+                    onClick={() => handleQuantityChange(item._id, -1)}
                   >
                     −
                   </button>
@@ -68,14 +149,14 @@ const Cart = () => {
                     `}
                     onClick={() => {
                       if (item.quantity < 10) {
-                        dispatch(updateQuantity({ id: item._id, delta: 1 }));
+                        handleQuantityChange(item._id, 1);
                       }
                     }}
                   >
                     +
                   </button>
                   <button
-                    onClick={() => dispatch(removeFromCart(item._id))}
+                    onClick={() => handleRemove(item._id)}
                     className="ml-3 text-red-500 text-sm hover:underline"
                     aria-label={`Remove ${item.title}`}
                   >
@@ -93,6 +174,7 @@ const Cart = () => {
 
             <div className="flex flex-col sm:flex-row gap-3">
               <button
+                onClick={handleBuyNow}
                 className="bg-amber-300 hover:bg-amber-200 text-white px-6 py-2 rounded shadow-sm transition"
               >
                 Buy Now
