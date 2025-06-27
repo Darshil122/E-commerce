@@ -3,13 +3,33 @@ const Cart = require("../models/Cart");
 const Product = require("../models/Products");
 const router = express.Router();
 
-// ✅ GET user cart
-router.get("/:userId", async (req, res) => {
+const jwt = require("jsonwebtoken");
+
+const verifyToken = (req, res, next) => {
+  const authHeader = req.headers.authorization;
+
+  if (!authHeader?.startsWith("Bearer ")) {
+    return res.status(401).json({ message: "No token provided" });
+  }
+
+  const token = authHeader.split(" ")[1];
+
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    req.user = decoded; // { id, email, iat, exp }
+    next();
+  } catch (err) {
+    return res.status(401).json({ message: "Invalid or expired token" });
+  }
+};
+
+
+router.get("/:userId", verifyToken, async (req, res) => {
   const cart = await Cart.findOne({ userId: req.params.userId }).populate("items.product");
   res.json(cart || { items: [] });
 });
 
-// ✅ ADD product to cart
+
 router.post("/add", async (req, res) => {
   const { userId, product } = req.body;
 
@@ -38,7 +58,6 @@ router.post("/add", async (req, res) => {
   res.json({ message: "Product added", items: cart.items });
 });
 
-// ✅ REMOVE product from cart
 router.delete("/remove/:userId/:productId", async (req, res) => {
   const { userId, productId } = req.params;
 
@@ -53,7 +72,6 @@ router.delete("/remove/:userId/:productId", async (req, res) => {
   }
 });
 
-// ✅ UPDATE quantity
 router.patch("/update/:userId/:productId", async (req, res) => {
   const { userId, productId } = req.params;
   const { delta } = req.body;
@@ -74,7 +92,6 @@ router.patch("/update/:userId/:productId", async (req, res) => {
   }
 });
 
-// ✅ CLEAR cart
 router.delete("/clear/:userId", async (req, res) => {
   await Cart.findOneAndDelete({ userId: req.params.userId });
   res.json({ message: "Cart cleared" });
