@@ -5,6 +5,8 @@ export const fetchCart = createAsyncThunk("cart/fetchCart", async () => {
   const user = JSON.parse(localStorage.getItem("user"));
   const userId = user?.user?._id;
 
+  if (!userId) throw new Error("User ID is missing");
+
   const res = await axios.get(`http://localhost:5000/cart/${userId}`);
   return res.data.items;
 });

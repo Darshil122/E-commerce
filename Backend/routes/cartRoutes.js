@@ -25,30 +25,30 @@ const jwt = require("jsonwebtoken");
 
 
 router.get("/:userId", async (req, res) => {
+  const userId = req.params.userId;
+
+  if (!userId || userId === "undefined") {
+    return res.status(400).json({ message: "Invalid user ID" });
+  }
+
   try {
-    const cart = await Cart.findOne({ userId: req.params.userId }).populate("items.product");
+    const cart = await Cart.findOne({ userId }).populate("items.product");
+    if (!cart) return res.json({ items: [] });
 
-    if (!cart) {
-      return res.json({ items: [] });
-    }
-
-    const items = cart.items.map(item => ({
+    const formattedItems = cart.items.map((item) => ({
+      _id: item.product._id,
+      title: item.product.title,
+      image: item.product.image,
+      price: item.product.price,
       quantity: item.quantity,
-      product: {
-        _id: item.product._id,
-        title: item.product.title,
-        price: item.product.price,
-        image: item.product.image,
-      },
     }));
 
-    res.json({ items });
+    res.json({ items: formattedItems });
   } catch (err) {
     console.error("Error fetching cart:", err);
     res.status(500).json({ message: "Server error" });
   }
 });
-
 
 router.post("/add", async (req, res) => {
   const { userId, product } = req.body;
