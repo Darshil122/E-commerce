@@ -4,12 +4,12 @@ import {jwtDecode} from "jwt-decode";
 
 // Get userId from token
 const getUserId = () => {
-  const token = localStorage.getItem("token");
-  if (token) {
-    const decoded = jwtDecode(token);
-    const decodeId = decoded.id;
-    console.log(decodeId);
-    return decodeId;
+  const user = localStorage.getItem("user");
+  if (user) {
+    // const decoded = jwtDecode(token);
+    const uId = user._id;
+    console.log(uId);
+    return uId;
   }
   return null;
 };

@@ -93,8 +93,16 @@ router.patch("/update/:userId/:productId", async (req, res) => {
 });
 
 router.delete("/clear/:userId", async (req, res) => {
-  await Cart.findOneAndDelete({ userId: req.params.userId });
-  res.json({ message: "Cart cleared" });
+  const { userId } = req.params;
+  if (!userId) return res.status(400).json({ message: "User ID is required" });
+
+  try {
+    await Cart.findOneAndDelete({ userId });
+    res.json({ message: "Cart cleared" });
+  } catch (err) {
+    res.status(500).json({ message: "Server error" });
+  }
 });
+
 
 module.exports = router;
