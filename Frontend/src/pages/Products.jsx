@@ -78,6 +78,7 @@ const Products = () => {
   const handleOpen = (product = null) => {
     setOpen(!open);
     setSelectedProduct(product);
+    console.log(product);
   };
 
   return (
@@ -139,15 +140,15 @@ const Products = () => {
                   <button
                     onClick={() => dispatch(addToCart(selectedProduct))}
                     disabled={cart.some(
-                      (item) => item.id === selectedProduct.id
+                      (item) => item._id === selectedProduct._id
                     )}
                     className={`rounded px-5 py-2 text-sm font-medium transition ${
-                      cart.some((item) => item.id === selectedProduct.id)
+                      cart.some((item) => item._id === selectedProduct._id)
                         ? "bg-gray-300 text-gray-600 cursor-not-allowed"
                         : "border border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white"
                     }`}
                   >
-                    {cart.some((item) => item.id === selectedProduct.id)
+                    {cart.some((item) => item._id === selectedProduct._id)
                       ? "Already in Cart"
                       : "Add to Cart"}
                   </button>

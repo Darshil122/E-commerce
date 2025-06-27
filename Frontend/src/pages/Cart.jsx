@@ -26,7 +26,7 @@ const Cart = () => {
           <div className="space-y-6">
             {cart.map((item) => (
               <div
-                key={item.id}
+                key={item._id}
                 className="flex flex-col sm:flex-row justify-between items-center gap-4 border-b pb-4"
               >
                 <div className="flex items-center gap-4 w-full sm:w-auto">
@@ -51,7 +51,7 @@ const Cart = () => {
                     aria-label="Decrease quantity"
                     className="px-3 py-1 border border-gray-300 rounded text-gray-700 hover:bg-gray-100 transition"
                     onClick={() =>
-                      dispatch(updateQuantity({ id: item.id, delta: -1 }))
+                      dispatch(updateQuantity({ id: item._id, delta: -1 }))
                     }
                   >
                     −
@@ -68,14 +68,14 @@ const Cart = () => {
                     `}
                     onClick={() => {
                       if (item.quantity < 10) {
-                        dispatch(updateQuantity({ id: item.id, delta: 1 }));
+                        dispatch(updateQuantity({ id: item._id, delta: 1 }));
                       }
                     }}
                   >
                     +
                   </button>
                   <button
-                    onClick={() => dispatch(removeFromCart(item.id))}
+                    onClick={() => dispatch(removeFromCart(item._id))}
                     className="ml-3 text-red-500 text-sm hover:underline"
                     aria-label={`Remove ${item.title}`}
                   >
