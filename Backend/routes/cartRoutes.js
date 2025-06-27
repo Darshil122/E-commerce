@@ -1,32 +1,52 @@
 const express = require("express");
 const Cart = require("../models/Cart");
-const Product = require("../models/Products");
+// const Product = require("../models/Products");
 const router = express.Router();
 
 const jwt = require("jsonwebtoken");
 
-const verifyToken = (req, res, next) => {
-  const authHeader = req.headers.authorization;
+// const verifyToken = (req, res, next) => {
+//   const authHeader = req.headers.authorization;
 
-  if (!authHeader?.startsWith("Bearer ")) {
-    return res.status(401).json({ message: "No token provided" });
-  }
+//   if (!authHeader?.startsWith("Bearer ")) {
+//     return res.status(401).json({ message: "No token provided" });
+//   }
 
-  const token = authHeader.split(" ")[1];
+//   const token = authHeader.split(" ")[1];
 
+//   try {
+//     const decoded = jwt.verify(token, process.env.JWT_SECRET);
+//     req.user = decoded; // { id, email, iat, exp }
+//     next();
+//   } catch (err) {
+//     return res.status(401).json({ message: "Invalid or expired token" });
+//   }
+// };
+
+
+router.get("/:userId", async (req, res) => {
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    req.user = decoded; // { id, email, iat, exp }
-    next();
+    const cart = await Cart.findOne({ userId: req.params.userId }).populate("items.product");
+
+    if (!cart) {
+      return res.json({ items: [] });
+    }
+
+    const items = cart.items.map(item => ({
+      quantity: item.quantity,
+      product: {
+        _id: item.product._id,
+        title: item.product.title,
+        price: item.product.price,
+        image: item.product.image,
+      },
+    }));
+
+    res.json({ items });
   } catch (err) {
-    return res.status(401).json({ message: "Invalid or expired token" });
+    console.error("Error fetching cart:", err);
+    res.status(500).json({ message: "Server error" });
   }
-};
-
-
-router.get("/:userId", verifyToken, async (req, res) => {
-  const cart = await Cart.findOne({ userId: req.params.userId }).populate("items.product");
-  res.json(cart || { items: [] });
 });
 
 
@@ -38,6 +58,7 @@ router.post("/add", async (req, res) => {
   }
 
   let cart = await Cart.findOne({ userId });
+  console.log(cart)
 
   if (!cart) {
     cart = new Cart({

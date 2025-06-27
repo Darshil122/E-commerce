@@ -77,8 +77,7 @@ const Products = () => {
 
   const handleOpen = (product = null) => {
     setOpen(!open);
-    setSelectedProduct(product);
-    console.log(product);
+    console.log(setSelectedProduct(product));
   };
 
   return (
