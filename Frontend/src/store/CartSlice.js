@@ -4,14 +4,14 @@ import axios from "axios";
 export const fetchCart = createAsyncThunk("cart/fetchCart", async () => {
   const user = JSON.parse(localStorage.getItem("user"));
   const userId = user._id;
-  const res = await axios.get(`http://localhost:5000/cart/${userId}`);
+  const res = await axios.get(`https://e-commerce-1jgv.vercel.app/cart/${userId}`);
   return res.data;
 });
 
 export const addToCart = createAsyncThunk("cart/addToCart", async (product) => {
   const user = JSON.parse(localStorage.getItem("user"));
 
-  const res = await axios.post("http://localhost:5000/cart/add", {
+  const res = await axios.post("https://e-commerce-1jgv.vercel.app/cart/add", {
     userId: user._id,
     productId: product._id,
   });
@@ -23,7 +23,7 @@ export const updateCartQuantity = createAsyncThunk(
   async ({ productId, quantity }) => {
     const user = JSON.parse(localStorage.getItem("user"));
 
-    const res = await axios.patch("http://localhost:5000/cart/update", {
+    const res = await axios.patch("https://e-commerce-1jgv.vercel.app/cart/update", {
       userId: user._id,
       productId,
       quantity,
@@ -36,7 +36,7 @@ export const removeFromCart = createAsyncThunk(
   "cart/removeFromCart",
   async (productId) => {
     const user = JSON.parse(localStorage.getItem("user"));
-    const res = await axios.delete("http://localhost:5000/cart/remove", {
+    const res = await axios.delete("https://e-commerce-1jgv.vercel.app/cart/remove", {
       data: {
         userId: user._id,
         productId,
@@ -52,7 +52,7 @@ export const clearCart = createAsyncThunk(
     const user = JSON.parse(localStorage.getItem("user"));
 
     const res = await axios.delete(
-      `http://localhost:5000/cart/clear/${user._id}`
+      `https://e-commerce-1jgv.vercel.app/cart/clear/${user._id}`
     );
     return res.data.items;
   }
