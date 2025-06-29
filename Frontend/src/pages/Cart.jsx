@@ -13,13 +13,12 @@ const Cart = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-useEffect(() => {
-  const user = JSON.parse(localStorage.getItem("user"));
-  if (user && user._id) {
-    dispatch(fetchCart());
-  }
-}, [dispatch]);
-
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (user && user._id) {
+      dispatch(fetchCart());
+    }
+  }, [dispatch]);
 
   // remove item
   const handleRemove = async (productId) => {
@@ -128,6 +127,12 @@ useEffect(() => {
               className="bg-amber-500 hover:bg-amber-400 px-4 py-2 text-white rounded"
             >
               Clear Cart
+            </button>
+            <button
+              className="bg-blue-500 hover:bg-blue-400 px-4 py-2 text-white rounded"
+              onClick={navigate("/")}
+            >
+              Add more item
             </button>
           </div>
         </>
