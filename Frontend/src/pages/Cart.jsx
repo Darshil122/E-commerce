@@ -118,23 +118,28 @@ const Cart = () => {
             ))}
           </div>
 
-          <div className="mt-6 flex justify-between items-center">
-            <div className="text-xl font-bold">
-              Total: ${totalPrice.toFixed(2)}
-            </div>
-            <button
-              onClick={handleClearCart}
-              className="bg-amber-500 hover:bg-amber-400 px-4 py-2 text-white rounded"
-            >
-              Clear Cart
-            </button>
-            <button
-              className="bg-blue-500 hover:bg-blue-400 px-4 py-2 text-white rounded"
-              onClick={navigate("/")}
-            >
-              Add more item
-            </button>
-          </div>
+          <div className="mt-8 p-6 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
+  <div className="text-2xl font-bold text-gray-800">
+    Total: <span>${totalPrice.toFixed(2)}</span>
+  </div>
+  
+  <div className="flex flex-col sm:flex-row gap-3">
+    <button
+      onClick={handleClearCart}
+      className="bg-red-500 hover:bg-red-600 text-white px-5 py-2 rounded"
+    >
+      Clear Cart
+    </button>
+    
+    <button
+      onClick={() => navigate("/")}
+      className="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded"
+    >
+      Add More Items
+    </button>
+  </div>
+</div>
+
         </>
       )}
     </div>
