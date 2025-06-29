@@ -1,4 +1,5 @@
 const User = require("../models/Users");
+const jwt = require("jsonwebtoken");
 
 async function handleUserLoginSign(req, res) {
   const { name, email, password, action } = req.body;
