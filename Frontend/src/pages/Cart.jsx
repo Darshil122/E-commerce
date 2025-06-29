@@ -13,9 +13,13 @@ const Cart = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  useEffect(() => {
+useEffect(() => {
+  const user = JSON.parse(localStorage.getItem("user"));
+  if (user && user._id) {
     dispatch(fetchCart());
-  }, [dispatch]);
+  }
+}, [dispatch]);
+
 
   // remove item
   const handleRemove = async (productId) => {
