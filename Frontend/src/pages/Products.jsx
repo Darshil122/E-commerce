@@ -11,6 +11,7 @@ import {
 import { StarIcon, XIcon } from "@phosphor-icons/react";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../store/CartSlice";
+import {toast} from 'react-toastify';
 
 const Products = () => {
   const navigate = useNavigate();
@@ -138,7 +139,7 @@ const Products = () => {
 
                 <div className="flex flex-wrap gap-3">
                   <button
-                    onClick={() => dispatch(addToCart(selectedProduct))}
+                    onClick={() => dispatch(addToCart(selectedProduct)).then(()=> toast.success("Item Added to cart"))}
                     disabled={cart.some(
                       (item) => item._id === selectedProduct._id
                     )}

@@ -9,9 +9,7 @@ import {
 import { useNavigate } from "react-router-dom";
 
 const Cart = () => {
-  const cart = useSelector((state) =>
-    Array.isArray(state.cart.items) ? state.cart.items : []
-  );
+  const cart = useSelector((state) => state.cart.items);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
