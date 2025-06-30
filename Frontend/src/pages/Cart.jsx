@@ -7,6 +7,7 @@ import {
   clearCart,
 } from "../store/CartSlice";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const Cart = () => {
   const cart = useSelector((state) => state.cart.items);
@@ -22,22 +23,27 @@ const Cart = () => {
 
   // remove item
   const handleRemove = async (productId) => {
-    await dispatch(removeFromCart(productId));
-    alert("Item removed from cart successfully!");
-    await dispatch(fetchCart());
-  };
+  await dispatch(removeFromCart(productId));
+  await dispatch(fetchCart());
+  toast.error("Item removed from cart!");
+};
 
   //Update Quantity
-  const handleQuantityChange = async (productId, newQty) => {
-    if (newQty >= 1) {
-      await dispatch(updateCartQuantity({ productId, quantity: newQty }));
-      await dispatch(fetchCart());
-    }
-  };
+ const handleQuantityChange = async (productId, newQty) => {
+  if (newQty >= 1) {
+    await dispatch(updateCartQuantity({ productId, quantity: newQty }));
+    await dispatch(fetchCart());
+    toast.success("Quantity updated");
+  }
+  if (newQty === 10) {
+    toast.info("Maximum quantity reached!");
+  }
+};
+
   //ClearCart
-  const handleClearCart = () => {
-    dispatch(clearCart());
-    alert("Cart cleared!");
+  const handleClearCart = async () => {
+    await dispatch(clearCart());
+    toast.error("Cart cleared");
   };
 
   const totalPrice = cart.reduce(

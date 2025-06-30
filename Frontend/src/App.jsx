@@ -14,6 +14,8 @@ import ProductDetail from "./pages/Product";
 import ErrorPage from "./pages/ErrorPage";
 import UserAuth from "./Auth/UserAuth";
 import Footer from "./components/Footer";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(
@@ -37,6 +39,7 @@ function App() {
   return (
     <>
       {!hideNavbar && <Navbar onLogout={handleLogout} />}
+      <ToastContainer position="bottom-right" autoClose={1000} />
       <Routes>
         <Route
           path="/Login"

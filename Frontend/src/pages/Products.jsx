@@ -1,18 +1,13 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import {
-  Button,
-  Dialog,
-  DialogHeader,
-  DialogBody,
-  DialogFooter,
-} from "@material-tailwind/react";
+import { Dialog, DialogHeader, DialogBody } from "@material-tailwind/react";
 import { StarIcon, XIcon } from "@phosphor-icons/react";
 import { useDispatch, useSelector } from "react-redux";
-import { addToCart } from "../store/CartSlice";
-import {toast} from 'react-toastify';
+import { addToCart, fetchCart } from "../store/CartSlice";
+import { toast } from "react-toastify";
 
+toast.configure;
 const Products = () => {
   const navigate = useNavigate();
 
@@ -33,7 +28,9 @@ const Products = () => {
   const getProduct = async () => {
     try {
       setLoading(true);
-      const response = await axios.get("https://e-commerce-1jgv.vercel.app/products");
+      const response = await axios.get(
+        "https://e-commerce-1jgv.vercel.app/products"
+      );
       setData(response.data);
       setFilteredData(response.data);
       setLoading(false);
@@ -70,7 +67,7 @@ const Products = () => {
     "Furniture",
     "Fitness",
     "Home Appliances",
-    "Accessories"
+    "Accessories",
   ];
 
   const [selectedProduct, setSelectedProduct] = useState(null);
@@ -139,7 +136,12 @@ const Products = () => {
 
                 <div className="flex flex-wrap gap-3">
                   <button
-                    onClick={() => dispatch(addToCart(selectedProduct)).then(()=> toast.success("Item Added to cart"))}
+                    onClick={async () => {
+                      await dispatch(addToCart(selectedProduct))
+                        .unwrap()
+                        .then(() => toast.success("Item added to cart!"));
+                      await dispatch(fetchCart());
+                    }}
                     disabled={cart.some(
                       (item) => item._id === selectedProduct._id
                     )}
@@ -153,7 +155,6 @@ const Products = () => {
                       ? "Already in Cart"
                       : "Add to Cart"}
                   </button>
-
                   <button
                     onClick={() => {
                       handleOpen(null);

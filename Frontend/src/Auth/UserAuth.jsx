@@ -2,6 +2,7 @@ import { EyeIcon, EyeSlashIcon } from "@phosphor-icons/react/dist/ssr";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import {toast} from "react-toastify";
 
 const UserAuth = ({ onLogin }) => {
   const [action, setAction] = useState("Login");
@@ -34,7 +35,7 @@ const UserAuth = ({ onLogin }) => {
         return;
       }
 
-      alert(result.message);
+      toast.success(result.message);
       if (action === "Login") {
         onLogin();
         navigate("/");
